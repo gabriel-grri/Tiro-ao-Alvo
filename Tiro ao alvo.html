@@ -1,0 +1,48 @@
+<title>Tiro ao Alvo</title>
+<canvas width = 1322 height = 600></canvas>
+<script>
+var canvas = document.querySelector("canvas")
+var paint = canvas.getContext("2d")
+
+var raio = 7
+var x = 0
+var y = 0
+
+function circle(x,y,raio,cor){
+paint.fillStyle = cor
+paint.beginPath()
+paint.arc(x,y,raio,0,2 * 3.14)
+paint.fill()
+}
+
+function alvo(){
+x = Math.round(Math.random()* 1300)
+y = Math.round(Math.random()* 580)
+
+circle(x,y,raio + 28,"Red")
+circle(x,y,raio + 18,"White")
+circle(x,y,raio + 8,"Red")
+circle(x,y,raio,"White")
+}
+
+function atualiza(){
+paint.clearRect(0,0,1322,600)
+alvo()
+}
+
+setInterval(atualiza,1500)
+
+function dispara(local){
+var xP = local.pageX - canvas.offsetLeft
+var yP = local.pageY - canvas.offsetTop
+
+if((xP > x - raio)&&
+(xP < x + raio)&&
+(yP > y - raio)&&
+(yP < y + raio)){
+alert("acertou")
+}
+}
+
+canvas.onclick = dispara
+</script>
